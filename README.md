@@ -61,6 +61,7 @@ yml解释：
   #analysisTokenUrl 调用ssoServer服务，用于解析token，获取用户数据接口
 
 
+
 3、cd sso_client 进入目录
 
 4、执行maven命令： mvn clean install -Dmaven.test.skip=true
