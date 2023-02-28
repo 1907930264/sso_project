@@ -35,6 +35,7 @@ sso-client配置：
 
 第二：新建其他springboot项目A,并且引入maven依赖：
 
+
         <dependency>
             <groupId>com.yxj</groupId>
             <artifactId>sso-client</artifactId>
@@ -60,8 +61,3 @@ yml解释：
   #callbackUrl 业务系统的回调地址，在ssoserver认证通过后回调回业务系统
   #analysisTokenUrl 调用ssoServer服务，用于解析token，获取用户数据接口
 
-
-
-3、cd sso_client 进入目录
-
-4、执行maven命令： mvn clean install -Dmaven.test.skip=true
