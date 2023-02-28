@@ -12,7 +12,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ****
     password: ****
-    url: jdbc:mysql://****:3306/yxj
+    url: jdbc:mysql://****:3306/sso-server
   redis:
     #数据库索引
     database: ${REDIS_DB:0}
