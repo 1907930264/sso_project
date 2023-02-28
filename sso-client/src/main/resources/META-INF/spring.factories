@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.yxj.ssoclient.config.SsoFilterConfig,\
+com.yxj.ssoclient.config.SsoMetaProperty,\
+com.yxj.ssoclient.spi.adapt.CustomAuthenticationAdapt
