@@ -1,5 +1,6 @@
 package com.yxj.ssoclient.filters;
 
+import com.yxj.ssoclient.cache.SsoCache;
 import com.yxj.ssoclient.config.SsoMetaProperty;
 import com.yxj.ssoclient.context.SsoClientContext;
 import com.yxj.ssoclient.context.SsoClientContextHolder;
@@ -22,8 +23,11 @@ public class SsoPreAuthenticationFilter implements Filter {
 
     private SsoMetaProperty ssoMetaProperty;
 
-    public SsoPreAuthenticationFilter(SsoMetaProperty ssoMetaProperty){
+    private SsoCache ssoCache;
+
+    public SsoPreAuthenticationFilter(SsoMetaProperty ssoMetaProperty, SsoCache ssoCache){
         this.ssoMetaProperty = ssoMetaProperty;
+        this.ssoCache = ssoCache;
     }
 
     @Override
@@ -31,7 +35,7 @@ public class SsoPreAuthenticationFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         try {
             String ssoToken = getSsoToken(httpServletRequest);
-            if (ssoToken != null && !SsoClientContextHolder.getContext().getAuthenticated()){
+            if (ssoToken != null && ssoCache.reSetAuthenticationByCache(ssoToken) && !SsoClientContextHolder.getContext().getAuthenticated()){
                 //token不为空且当前未进行查询到认证信息，向ssoServer获取认证信息
                 StringBuffer sb = new StringBuffer(ssoMetaProperty.getAnalysisTokenUrl());
                 sb.append("?ssoToken="+ssoToken);
@@ -50,6 +54,7 @@ public class SsoPreAuthenticationFilter implements Filter {
                             context.setBizData((Map<String, Object>)map.get("bizData"));
                         }
                         SsoClientContextHolder.setContext(context);
+                        ssoCache.set(context);
 
                         //设置cookie
                         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;

@@ -37,6 +37,7 @@ public class LoginVerifyFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        long start = System.currentTimeMillis();
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
@@ -68,6 +69,10 @@ public class LoginVerifyFilter extends GenericFilterBean {
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
+        long end = System.currentTimeMillis();
+
+        System.out.println("use time："+(end - start));
+
     }
 
     private void sendRedirect(String callbackUrl, String token, HttpServletResponse httpServletResponse) throws IOException {

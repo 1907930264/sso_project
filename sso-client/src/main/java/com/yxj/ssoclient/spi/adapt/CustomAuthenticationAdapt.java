@@ -1,5 +1,6 @@
 package com.yxj.ssoclient.spi.adapt;
 
+import com.yxj.ssoclient.context.SsoClientContextHolder;
 import com.yxj.ssoclient.spi.CustomAuthenticationInterface;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -22,7 +23,7 @@ public class CustomAuthenticationAdapt implements ApplicationContextAware, BeanD
 
     public Boolean authentication(HttpServletRequest servletRequest, HttpServletResponse servletResponse){
         CustomAuthenticationInterface bean = applicationContext.getBean(CustomAuthenticationInterface.class);
-        return bean != null ? bean.authentication(servletRequest, servletResponse) : false;
+        return bean != null ? bean.authentication(servletRequest, servletResponse) :  SsoClientContextHolder.getContext().getAuthenticated();
     }
 
     @Override
