@@ -6,6 +6,7 @@ sso-server为独立启动的springboot项目，主要集成了springsecurity实�
 db配置：
 
 第一：建立mysql库：sso_server
+
 第二：执行sql语句：
            DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user`  (
@@ -34,6 +35,7 @@ sso-client配置：
 
 第二：新建其他springboot项目A,并且引入maven依赖：
 
+
         <dependency>
             <groupId>com.yxj</groupId>
             <artifactId>sso-client</artifactId>
@@ -43,23 +45,19 @@ sso-client配置：
 第三：在项目A里配置关于sso-client的一些yml配置：
 
 sso-config:
-  #ssoServerUrl 为ssoServer登陆页地址
   ssoServerUrl: http://${sso服务地址}/sso/loginPage.html
-  #filterGlobalSwitch 全局开关，开启sso单点登陆拦截，需配置为true
   filterGlobalSwitch: true
-  #customAuthenticationSwitch 是否开启业务系统自定义认证判断，如果为true，则需要实现CustomAuthenticationInterface接口并重写认证判断逻辑
   customAuthenticationSwitch: false
-  #urlPattens 过滤器过滤，配置/*说明对所有请求进行拦截
   urlPattens:
     - /*
-#    - /testCookie/*
-  #callbackUrl 业务系统的回调地址，在ssoserver认证通过后回调回业务系统
   callbackUrl: http://localhost:${server.port}/testCookie/a
-  #analysisTokenUrl 调用ssoServer服务，用于解析token，获取用户数据接口
   analysisTokenUrl: http://${sso服务地址}/sso/claims
+  
+yml解释：
+  #ssoServerUrl 为ssoServer登陆页地址
+  #filterGlobalSwitch 全局开关，开启sso单点登陆拦截，需配置为true
+  #customAuthenticationSwitch 是否开启业务系统自定义认证判断，如果为true，则需要实现CustomAuthenticationInterface接口并重写认证判断逻辑
+  #urlPattens 过滤器过滤，配置/*说明对所有请求进行拦截
+  #callbackUrl 业务系统的回调地址，在ssoserver认证通过后回调回业务系统
+  #analysisTokenUrl 调用ssoServer服务，用于解析token，获取用户数据接口
 
-
-
-3、cd sso_client 进入目录
-
-4、执行maven命令： mvn clean install -Dmaven.test.skip=true
